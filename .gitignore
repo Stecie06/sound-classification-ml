@@ -1,3 +1,4 @@
+# Python
 __pycache__/
 *.pyc
 *.pyo
@@ -6,16 +7,22 @@ __pycache__/
 env/
 venv/
 .venv/
+sound_env/
 *.egg-info/
 .pytest_cache/
 .mypy_cache/
-.history/
-.DS_Store
 data/upload/*
 data/temp/*
-models/*.pkl
-!models/sound_classifier.pkl
 *.npy
 *.npz
-DockerDesktopInstaller.exe
+*.h5
+*.model
+models/*.pkl
+!models/sound_classifier.pkl
+*.dll
+*.exe
+*.so
+*.dylib
 *.log
+logs/
+.gitpod*
