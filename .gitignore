@@ -26,3 +26,5 @@ models/*.pkl
 *.log
 logs/
 .gitpod*
+sound_env/
+*.dll
