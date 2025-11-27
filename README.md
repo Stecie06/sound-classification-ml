@@ -17,6 +17,11 @@ This project demonstrates a complete ML pipeline for sound classification:
 - Python 3.8+
 - Git
 - (Optional) Docker
+### 1. Youtube Video 
+
+```bash
+https://studio.youtube.com/video/kkgWzldo7Vs/edit
+```
 
 ### 1. Clone and Setup
 
