@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # Flask API Service
+  api:
+    build: .
+    container_name: sound-classification-api
+    ports:
+      - "5000:5000"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./src:/app/src
+      - ./api:/app/api
+    environment:
+      - FLASK_ENV=production
+      - PYTHONUNBUFFERED=1
+      - MODEL_PATH=/app/models/sound_classifier.pkl
+    command: python api/app.py
+    restart: unless-stopped
+    networks:
+      - ml-network
+    healthcheck:
+      test: ["CMD", "curl", "-f", "http://localhost:5000/health"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+  # Streamlit UI Service
+  ui:
+    build: .
+    container_name: sound-classification-ui
+    ports:
+      - "8501:8501"
+    volumes:
+      - ./models:/app/models
+      - ./data:/app/data
+      - ./src:/app/src
+      - ./ui:/app/ui
+    environment:
+      - PYTHONUNBUFFERED=1
+      - API_URL=http://api:5000
+    command: streamlit run ui/streamlit_app.py --server.port=8501 --server.address=0.0.0.0
+    restart: unless-stopped
+    depends_on:
+      - api
+    networks:
+      - ml-network
+
+  # Load Testing with Locust
+  locust:
+    build:
+      context: .
+      dockerfile: Dockerfile.locust
+    ports:
+      - "8089:8089"
+    volumes:
+      - ./load_test:/app/locust
+      - ./data:/app/data
+    environment:
+      - TARGET_URL=http://api:5000
+    depends_on:
+      - api
+    networks:
+      - ml-network
+
+  # Nginx Load Balancer (for multiple API instances)
+  nginx:
+    image: nginx:alpine
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx.conf:/etc/nginx/nginx.conf
+    depends_on:
+      - api
+    networks:
+      - ml-network
+
+networks:
+  ml-network:
+    driver: bridge

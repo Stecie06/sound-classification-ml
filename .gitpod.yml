@@ -1,0 +1,19 @@
+image:
+  file: .gitpod.Dockerfile
+
+tasks:
+  - init: |
+      pip install -r requirements.txt
+      cd notebook && python create_compatible_model.py && cd ..
+    command: python api/app.py
+
+  - name: Streamlit UI
+    command: streamlit run ui/streamlit_app.py --server.port 8501
+
+ports:
+  - port: 5000
+    onOpen: open-preview
+  - port: 8501
+    onOpen: open-preview
+  - port: 8089
+    onOpen: open-preview
