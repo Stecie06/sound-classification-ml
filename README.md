@@ -20,7 +20,7 @@ This project demonstrates a complete ML pipeline for sound classification:
 ### 1. Youtube Video 
 
 ```bash
-Youtube Video = [https://studio.youtube.com/video/kkgWzldo7Vs/edit](https://youtu.be/kkgWzldo7Vs)
+Youtube Video = https://youtu.be/kkgWzldo7Vs
 ```
 
 ### 1. Clone and Setup
