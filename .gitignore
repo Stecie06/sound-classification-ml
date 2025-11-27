@@ -28,3 +28,9 @@ logs/
 .gitpod*
 sound_env/
 *.dll
+sound_env/
+venv/
+.env/
+*.jar
+get-pip.py
+data/upload/
